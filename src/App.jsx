@@ -1,17 +1,36 @@
 import { useState, useEffect } from "react";
+import LoadingPage from "./pages/LoadingPage";
+import StartPage from "./pages/StartPage";
 import GamePage from "./pages/GamePage";
 import Footer from "./components/Footer";
+import Sound from "react-sound";
 import video from "./assets/img/camp.mp4";
 import backgroundMusic from "./assets/sounds/background_music.mp3";
 import flipSound from "./assets/sounds/flip.mp3";
 import clickSound from "./assets/sounds/click.wav";
 import characters from "./characters";
+import './styles/App.scss';
+import './styles/normalize.css';
 
-function App({}) {
+function App({
+  handleSongLoading,
+  handleSongPlaying,
+  handleSongFinishedPlaying,
+}) {
+  const [isLoadingOver, setIsLoadingOver] = useState(false);
   const [isMusicPlaying, setIsMusicPlaying] = useState(false);
   const [isSoundPlaying, setIsSoundPlaying] = useState(true);
   const [difficultyLevel, setDifficultyLevel] = useState([]);
   const [charactersToPlayWith, setCharactersToPlayWith] = useState([]);
+  const [charactersToDisplay, setCharactersToDisplay] = useState([]);
+  const [score, setScore] = useState(0);
+  const [bestScore, setBestScore] = useState(0);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoadingOver(true);
+    }, 3700);
+  }, []);
 
   const goBackToStartPage = () => {
     // everytime user goes back to the start page/restarts the game, reset the difficulty level
@@ -48,13 +67,13 @@ function App({}) {
       }
     }
 
-    setCharactersToPlayWith(randomCharacters);
-    shuffle(randomCharacters);
+    setCharactersToPlayWith(randomCharacters); // only after shuffling, the characters are set to play with
+    shuffle(randomCharacters); // 1st shuffle will happen
   };
 
   const shuffle = (array) => {
     let shuffledCharacters = [];
-    let clicked = 0; // A counter that tracks how many characters in the shuffled result have already been clicked.
+    let clicked = 0; // A counter that tracks how many characters in the shuffled result/displayed result have already been clicked.
 
     while (shuffledCharacters.length < difficultyLevel[1]) {
       const randNum = Math.floor(Math.random() * array.length);
@@ -66,6 +85,7 @@ function App({}) {
         shuffledCharacters.push(character);
         clicked += +character.clicked;
       }
+      setCharactersToDisplay(shuffledCharacters);
     }
   };
 
@@ -76,37 +96,69 @@ function App({}) {
     }
   };
 
-  const steteRoundResult = (character) => {
-    // write the logic after understanding the handleCardClick
-    // and corresponding fncs that happen before this fnc in 
-    // the GamePage.jsx component
-  }
+  const stateRoundResult = (character) => {
+    if (character.clicked) {
+      return "lose";
+    }
+    if (score === difficultyLevel[0] - 1) {
+      return "win";
+    } else {
+      return "";
+    }
+  };
 
   return (
     <>
-      <GamePage
-        goBackToStartPage={goBackToStartPage}
-        playClick={playClick}
-        playFlip={playFlip}
-        getCharactersToPlayWith={getCharactersToPlayWith}
-        setCharactersToPlayWith={setCharactersToPlayWith}
-        setCharactersToDisplay={setCharactersToDisplay}
-        charactersToPlayWith={charactersToPlayWith}
-        charactersToDisplay={charactersToDisplay}
-        shuffle={shuffle}
-        score={score}
-        setScore={setScore}
-        bestScore={bestScore}
-        setBestScore={setBestScore}
-        countScore={countScore}
-        stateRoundResult={stateRoundResult}
-      />
-      <Footer
-        isMusicPlaying={isMusicPlaying}
-        setIsMusicPlaying={setIsMusicPlaying}
-        isSoundPlaying={isSoundPlaying}
-        setIsSoundPlaying={setIsSoundPlaying}
-        playClick={playClick}
+      {!isLoadingOver ? (
+        <LoadingPage />
+      ) : (
+        <>
+          {!difficultyLevel[0] ? (
+            <StartPage
+              setDifficultyLevel={setDifficultyLevel}
+              playClick={playClick}
+            />
+          ) : (
+            <GamePage
+              goBackToStartPage={goBackToStartPage}
+              playClick={playClick}
+              playFlip={playFlip}
+              getCharactersToPlayWith={getCharactersToPlayWith}
+              setCharactersToPlayWith={setCharactersToPlayWith}
+              setCharactersToDisplay={setCharactersToDisplay}
+              charactersToPlayWith={charactersToPlayWith}
+              charactersToDisplay={charactersToDisplay}
+              shuffle={shuffle}
+              score={score}
+              setScore={setScore}
+              bestScore={bestScore}
+              setBestScore={setBestScore}
+              countScore={countScore}
+              stateRoundResult={stateRoundResult}
+            />
+          )}
+
+          <Footer
+            isMusicPlaying={isMusicPlaying}
+            setIsMusicPlaying={setIsMusicPlaying}
+            isSoundPlaying={isSoundPlaying}
+            setIsSoundPlaying={setIsSoundPlaying}
+            playClick={playClick}
+          />
+        </>
+      )}
+
+      <video autoPlay muted loop id="myVideo">
+        <source src={video} type="video/mp4" />
+      </video>
+      <Sound
+        url={backgroundMusic}
+        playStatus={isMusicPlaying ? Sound.status.PLAYING : Sound.status.PAUSED}
+        onLoading={handleSongLoading}
+        onPlaying={handleSongPlaying}
+        onFinishedPlaying={handleSongFinishedPlaying}
+        volume={2.8}
+        loop={true}
       />
     </>
   );
