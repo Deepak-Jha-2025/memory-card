@@ -14,7 +14,7 @@ function Header({ goBackToStartPage, playClick, score, bestScore }) {
       <div className="headerContainer">
         <motion.img
           src={logo}
-          alt="logo"
+          alt="Logo"
           onClick={() => {
             goBackToStartPage();
             playClick();

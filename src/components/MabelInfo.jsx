@@ -31,7 +31,7 @@ function MabelInfo() {
       <motion.img
         src={mabelInfo}
         alt="Mabel Info"
-        className="mableInfo"
+        className="mabelInfo"
         variants={variants}
         initial="hidden"
         animate="visible"

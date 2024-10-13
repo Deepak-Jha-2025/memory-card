@@ -34,8 +34,8 @@ function Footer({
             playClick();
           }}>
             {isSoundPlaying
-              ? <Volume className='svg?react'/>
-              : <VolumeOff className='svg?react'/>}
+              ? <Volume className='svg'/>
+              : <VolumeOff className='svg'/>}
           </button>
           
           <button onClick={() => {
@@ -44,8 +44,8 @@ function Footer({
             playClick();
           }}>
             {isMusicPlaying
-              ? <Music className='svg?react'/>
-              : <MusicOff className='svg?react'/>}
+              ? <Music className='svg'/>
+              : <MusicOff className='svg'/>}
           </button>
         </div>
         <button onClick={() => {
@@ -54,8 +54,8 @@ function Footer({
           playClick();
         }}>
               {isInfoNeeded
-                ? <Cross className='svg?react'/>
-                : <QuestionMark className='svg?react'/>}
+                ? <Cross className='svg'/>
+                : <QuestionMark className='svg'/>}
         </button>
         <AnimatePresence>
                 {isInfoNeeded && (

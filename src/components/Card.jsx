@@ -10,7 +10,7 @@ function Card({ character, isFlipped, handleCardClick }) {
         glareEnable={true}
         glareMaxOpacity={0.6}
         glareColor="#ffffff"
-        glarePosition="botton"
+        glarePosition="bottom"
         glareBorderRadius="20px"
         className="tilt"
       >
