@@ -163,7 +163,7 @@ function App() {
       )}
 
       <video autoPlay muted loop id="myVideo">
-        <source src={video} type="video/mp4" />
+        <source src={video} type="video/mp4"/>
       </video>
     </>
   );
