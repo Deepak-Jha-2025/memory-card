@@ -1,22 +1,17 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import LoadingPage from "./pages/LoadingPage";
 import StartPage from "./pages/StartPage";
 import GamePage from "./pages/GamePage";
 import Footer from "./components/Footer";
-// import Sound from "react-sound";
 import video from "./assets/img/camp.mp4";
 import backgroundMusic from "./assets/sounds/background_music.mp3";
 import flipSound from "./assets/sounds/flip.mp3";
 import clickSound from "./assets/sounds/click.wav";
 import characters from "./characters";
-import './styles/App.scss';
-import './styles/normalize.css';
+import "./styles/normalize.css";
+import "./styles/App.scss";
 
-function App({
-  handleSongLoading,
-  handleSongPlaying,
-  handleSongFinishedPlaying,
-}) {
+function App() {
   const [isLoadingOver, setIsLoadingOver] = useState(false);
   const [isMusicPlaying, setIsMusicPlaying] = useState(false);
   const [isSoundPlaying, setIsSoundPlaying] = useState(true);
@@ -25,6 +20,25 @@ function App({
   const [charactersToDisplay, setCharactersToDisplay] = useState([]);
   const [score, setScore] = useState(0);
   const [bestScore, setBestScore] = useState(0);
+
+  // Create a reference for the audion object
+  const backgroundMusicRef = useRef(null);
+
+  useEffect(() => {
+    // Initialize the background music with loop enabled
+    backgroundMusicRef.current = new Audio(backgroundMusic);
+    backgroundMusicRef.current.loop = true;
+    backgroundMusicRef.current.volume = 0.15;
+  }, []);
+
+  // Control the background music based on the isMusicPlaying state
+  useEffect(() => {
+    if (isMusicPlaying) {
+      backgroundMusicRef.current.play();
+    } else {
+      backgroundMusicRef.current.pause();
+    }
+  }, [isMusicPlaying]);
 
   useEffect(() => {
     setTimeout(() => {
@@ -44,7 +58,7 @@ function App({
   const playFlip = () => {
     if (isSoundPlaying) {
       const audio = new Audio(flipSound);
-      audio.volume = 0.2;
+      audio.volume = 0.6;
       audio.play();
     }
   };
@@ -52,7 +66,7 @@ function App({
   const playClick = () => {
     if (isSoundPlaying) {
       const audio = new Audio(clickSound);
-      audio.volume = 0.07;
+      audio.volume = 0.35;
       audio.play();
     }
   };
@@ -151,15 +165,6 @@ function App({
       <video autoPlay muted loop id="myVideo">
         <source src={video} type="video/mp4" />
       </video>
-      {/* <Sound
-        url={backgroundMusic}
-        playStatus={isMusicPlaying ? Sound.status.PLAYING : Sound.status.PAUSED}
-        onLoading={handleSongLoading}
-        onPlaying={handleSongPlaying}
-        onFinishedPlaying={handleSongFinishedPlaying}
-        volume={2.8}
-        loop={true}
-      /> */}
     </>
   );
 }

@@ -16,7 +16,7 @@ function StartPage({ setDifficultyLevel, playClick }) {
       <div className="startPage">
         <motion.img
           src={logo}
-          alt="logo"
+          alt="Logo"
           className="logo"
           variants={variants}
           initial="hidden"
@@ -45,17 +45,17 @@ function StartPage({ setDifficultyLevel, playClick }) {
               setDifficultyLevel([5, 3]);
               playClick();
             }}
-          >Easy</button>
+          > Easy </button>
 
           <button onClick={() => {
             setDifficultyLevel([7, 4]);
             playClick();
-          }}>Medium</button>
+          }}> Medium </button>
 
           <button onClick={() => {
             setDifficultyLevel([10, 5]);
             playClick();
-          }}>Hard</button>
+          }}> Hard </button>
         </motion.div>
       </div>
     </>

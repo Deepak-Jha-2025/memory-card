@@ -52,7 +52,7 @@ function GamePage({
 
     // If the user wins or loses, stop further actions
     if (turnResult !== "") {
-      if (turnResult == "win") countScore();
+      if (turnResult === "win") countScore();
       setIsClicked(false); //  resets the click lock, allowing the user to click again in the next round.
       return;
     }
