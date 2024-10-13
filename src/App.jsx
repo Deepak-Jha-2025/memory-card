@@ -3,7 +3,7 @@ import LoadingPage from "./pages/LoadingPage";
 import StartPage from "./pages/StartPage";
 import GamePage from "./pages/GamePage";
 import Footer from "./components/Footer";
-import Sound from "react-sound";
+// import Sound from "react-sound";
 import video from "./assets/img/camp.mp4";
 import backgroundMusic from "./assets/sounds/background_music.mp3";
 import flipSound from "./assets/sounds/flip.mp3";
@@ -151,7 +151,7 @@ function App({
       <video autoPlay muted loop id="myVideo">
         <source src={video} type="video/mp4" />
       </video>
-      <Sound
+      {/* <Sound
         url={backgroundMusic}
         playStatus={isMusicPlaying ? Sound.status.PLAYING : Sound.status.PAUSED}
         onLoading={handleSongLoading}
@@ -159,7 +159,7 @@ function App({
         onFinishedPlaying={handleSongFinishedPlaying}
         volume={2.8}
         loop={true}
-      />
+      /> */}
     </>
   );
 }
