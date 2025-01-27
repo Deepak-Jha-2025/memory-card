@@ -21,14 +21,14 @@ The Memory Card Game is an interactive and engaging game built with React. Playe
 ```    
 2. Install the necessary dependencies using npm.
 ```bash
-cd memory-card
+   cd memory-card
 ``` 
 3. Install the necessary dependencies using npm.
 ```bash
    npm install
 ```
 4. Run the development server to view the application locally.
- ```bash
+```bash
    npm start
 ``` 
 
